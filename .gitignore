@@ -1,0 +1,30 @@
+# Virtual Environments
+backend/venv/
+backend/__pycache__/
+backend/*/__pycache__/
+*.pyc
+
+# Local Database Files (SQLite)
+backend/*.db
+backend/*.db-journal
+
+# Node Dependencies
+frontend/node_modules/
+
+# Next.js Build and Cache
+frontend/.next/
+frontend/out/
+frontend/build/
+
+# IDE and OS configurations
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Secrets & Environment variables
+backend/.env
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local

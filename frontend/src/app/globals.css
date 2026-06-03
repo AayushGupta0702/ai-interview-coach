@@ -1,0 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Outfit:wght@300;400;600&display=swap');
+@import "tailwindcss";
+
+@theme inline {
+  --font-serif: "Cinzel", "Playfair Display", "Times New Roman", serif;
+  --font-mono: "Share Tech Mono", "Orbitron", monospace;
+  --font-sans: "Outfit", sans-serif;
+  
+  /* Map theme tokens to CSS Custom Properties */
+  --color-cyber-bg: var(--bg-color);
+  --color-cyber-card: var(--card-bg);
+  --color-cyber-gold: var(--gold-color);
+  --color-cyber-gold-light: var(--gold-light);
+  --color-cyber-rose: #ff3366;
+  --color-cyber-cyan: var(--cyan-color);
+  --color-cyber-emerald: #05ffa1;
+  --color-cyber-border: var(--border-color);
+  --color-cyber-border-active: var(--border-active);
+}
+
+:root {
+  /* Dark Theme Properties (Default) */
+  --bg-color: #07090e;
+  --card-bg: rgba(13, 18, 30, 0.75);
+  --gold-color: #c5a85c;
+  --gold-light: #e5c97c;
+  --cyan-color: #00f2fe;
+  --border-color: rgba(197, 168, 92, 0.2);
+  --border-active: rgba(0, 242, 254, 0.5);
+  --text-primary: #f3f4f6;
+  --text-muted: #9ca3af;
+  --grid-color: rgba(197, 168, 92, 0.02);
+  --shadow-color: rgba(0, 0, 0, 0.37);
+  --radial-gold: rgba(197, 168, 92, 0.05);
+  --radial-cyan: rgba(0, 242, 254, 0.05);
+}
+
+[data-theme="light"] {
+  /* Light Theme Properties (Ivory Sand & Bronze) */
+  --bg-color: #f7f6f2;
+  --card-bg: rgba(255, 255, 255, 0.85);
+  --gold-color: #927331;
+  --gold-light: #ac8e4a;
+  --cyan-color: #088190;
+  --border-color: rgba(146, 115, 49, 0.25);
+  --border-active: rgba(8, 129, 144, 0.55);
+  --text-primary: #211e19;
+  --text-muted: #5e5950;
+  --grid-color: rgba(146, 115, 49, 0.04);
+  --shadow-color: rgba(146, 115, 49, 0.08);
+  --radial-gold: rgba(146, 115, 49, 0.07);
+  --radial-cyan: rgba(8, 129, 144, 0.07);
+}
+
+body {
+  background-color: var(--color-cyber-bg);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  background-image: 
+    radial-gradient(circle at 10% 20%, var(--radial-gold) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, var(--radial-cyan) 0%, transparent 40%),
+    linear-gradient(var(--grid-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+  transition: background-color 0.3s ease, color 0.3s ease, background-image 0.3s ease;
+}
+
+/* Glassmorphism Styles */
+.cyber-glass {
+  background: var(--color-cyber-card);
+  backdrop-filter: blur(16px) saturate(120%);
+  -webkit-backdrop-filter: blur(16px) saturate(120%);
+  border: 1px solid var(--color-cyber-border);
+  box-shadow: 0 8px 32px 0 var(--shadow-color);
+  transition: background 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cyber-glass-active {
+  border: 1px solid var(--color-cyber-border-active);
+  box-shadow: 0 0 20px rgba(0, 242, 254, 0.15);
+}
+
+/* Dynamic text variables */
+.text-cyber-primary {
+  color: var(--text-primary);
+}
+
+.text-cyber-muted {
+  color: var(--text-muted);
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-cyber-gold);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-cyber-cyan);
+}
+
+/* Micro-animations */
+@keyframes neon-glow {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(197, 168, 92, 0.2), inset 0 0 5px rgba(197, 168, 92, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(197, 168, 92, 0.4), inset 0 0 10px rgba(197, 168, 92, 0.2);
+  }
+}
+
+.glow-gold {
+  animation: neon-glow 3s infinite alternate;
+}
+
+@keyframes cyber-pulse {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.pulse-cyan {
+  animation: cyber-pulse 2s infinite ease-in-out;
+}
+
+.font-editorial {
+  font-family: var(--font-serif);
+}
+
+.font-telemetry {
+  font-family: var(--font-mono);
+}
