@@ -6,8 +6,13 @@ from sqlalchemy.orm import declarative_base, sessionmaker
 DEFAULT_DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "interview_coach.db")
 DATABASE_URL = os.environ.get("DATABASE_URL", f"sqlite:///{DEFAULT_DB_PATH}")
 
+# Fix SQLAlchemy compatibility for postgres:// protocol strings
+if DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+
 # If using SQLite, add check_same_thread configuration
 connect_args = {}
+
 if DATABASE_URL.startswith("sqlite"):
     connect_args = {"check_same_thread": False}
 
