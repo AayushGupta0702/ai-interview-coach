@@ -41,6 +41,9 @@ import {
   Radar
 } from "recharts";
 
+const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const WS_URL = BACKEND_URL.replace(/^http/, "ws");
+
 export default function Home() {
   // Theme state
   const [theme, setTheme] = useState("dark");
@@ -128,7 +131,7 @@ export default function Home() {
 
   const fetchPastSessions = async () => {
     try {
-      const res = await fetch("http://localhost:8000/history");
+      const res = await fetch(`${BACKEND_URL}/history`);
       if (res.ok) {
         const data = await res.json();
         setPastSessions(data);
@@ -183,7 +186,7 @@ export default function Home() {
     }
 
     try {
-      const res = await fetch("http://localhost:8000/upload-resume", {
+      const res = await fetch(`${BACKEND_URL}/upload-resume`, {
         method: "POST",
         body: formData,
       });
@@ -214,7 +217,7 @@ export default function Home() {
     setError(null);
     
     try {
-      const res = await fetch(`http://localhost:8000/report/${id}`);
+      const res = await fetch(`${BACKEND_URL}/report/${id}`);
       if (!res.ok) {
         throw new Error("Failed to load historical evaluation report.");
       }
@@ -253,7 +256,7 @@ export default function Home() {
     setLoading(true);
 
     try {
-      const res = await fetch(`http://localhost:8000/candidate/${searchId.trim()}`);
+      const res = await fetch(`${BACKEND_URL}/candidate/${searchId.trim()}`);
       if (!res.ok) {
         if (res.status === 404) {
           throw new Error("Candidate ID not found.");
@@ -277,7 +280,7 @@ export default function Home() {
     }
 
     try {
-      const res = await fetch(`http://localhost:8000/report/${id}`, {
+      const res = await fetch(`${BACKEND_URL}/report/${id}`, {
         method: "DELETE"
       });
       
@@ -289,7 +292,7 @@ export default function Home() {
       fetchPastSessions();
       if (searchedCandidate && searchedCandidate.candidate_id === parseInt(searchId)) {
         // Refresh lookup list
-        const cRes = await fetch(`http://localhost:8000/candidate/${searchId.trim()}`);
+        const cRes = await fetch(`${BACKEND_URL}/candidate/${searchId.trim()}`);
         if (cRes.ok) {
           const cData = await cRes.json();
           setSearchedCandidate(cData);
@@ -306,7 +309,7 @@ export default function Home() {
   const initiateCameraAndWebSocket = async () => {
     try {
       // Connect WebSocket
-      const ws = new WebSocket("ws://localhost:8000/ws/interview");
+      const ws = new WebSocket(`${WS_URL}/ws/interview`);
       wsRef.current = ws;
 
       ws.onopen = () => {
@@ -428,7 +431,7 @@ export default function Home() {
     setTelemetryTimeline(timeline);
 
     try {
-      const res = await fetch("http://localhost:8000/evaluate", {
+      const res = await fetch(`${BACKEND_URL}/evaluate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
